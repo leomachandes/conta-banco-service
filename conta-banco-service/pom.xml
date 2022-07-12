@@ -9,19 +9,44 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.example</groupId>
-	<artifactId>demo</artifactId>
+	<artifactId>conta-banco-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>demo</name>
-	<description>micro-serviço responsável gerenciar cadastro e manutenção de contas</description>
+	<name>conta-banco-service</name>
+	<description>Micro serviço por cadastrar e solicitar movimentações de conta</description>
 	<properties>
 		<java.version>11</java.version>
 		<kotlin.version>1.6.21</kotlin.version>
+		<org.mapstruct.version>1.4.2.Final</org.mapstruct.version>
 	</properties>
 	<dependencies>
+
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-core</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.flywaydb.enterprise</groupId>
+			<artifactId>flyway-mysql</artifactId>
+			<version>8.4.1</version>
+		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-mongodb</artifactId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -45,9 +70,15 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>de.flapdoodle.embed</groupId>
-			<artifactId>de.flapdoodle.embed.mongo</artifactId>
-			<scope>test</scope>
+			<groupId>org.mapstruct</groupId>
+			<artifactId>mapstruct</artifactId>
+			<version>1.4.2.Final</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.mapstruct</groupId>
+			<artifactId>mapstruct-processor</artifactId>
+			<version>1.4.2.Final</version>
 		</dependency>
 	</dependencies>
 
@@ -69,6 +100,17 @@
 					<compilerPlugins>
 						<plugin>spring</plugin>
 					</compilerPlugins>
+					<sourceDirs>
+						<sourceDir>src/main/kotlin</sourceDir>
+						<sourceDir>src/main/java</sourceDir>
+					</sourceDirs>
+					<annotationProcessorPaths>
+						<annotationProcessorPath>
+							<groupId>org.mapstruct</groupId>
+							<artifactId>mapstruct-processor</artifactId>
+							<version>1.4.2.Final</version>
+						</annotationProcessorPath>
+					</annotationProcessorPaths>
 				</configuration>
 				<dependencies>
 					<dependency>
@@ -77,7 +119,16 @@
 						<version>${kotlin.version}</version>
 					</dependency>
 				</dependencies>
+
+
 			</plugin>
+
+			<plugin>
+				<groupId>org.flywaydb</groupId>
+				<artifactId>flyway-maven-plugin</artifactId>
+			</plugin>
+
+
 		</plugins>
 	</build>
 
