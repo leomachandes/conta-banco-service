@@ -1,18 +1,12 @@
-version: '3.1'
+version: "3.2"
 services:
-  app:
-    container_name: conta-banco-service
-    image: conta-banco-service
-    build: ./
-    ports:
-      - "8080:8080"
-    depends_on:
-      - postgresqldb
-  postgresqldb:
+
+  postgres-service:
+    container_name: postgres-conta-service
+    ports: 
+        - "5432:5432"
     image: postgres
-    ports:
-      - "5432:5432"
-    environment:
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_USER=postgres
-      - POSTGRES_DB=conta
+    environment: 
+        - POSTGRES_USER=postgres
+        - POSTGRES_DB=conta
+        - POSTGRES_PASSWORD=postgres
