@@ -1,8 +1,8 @@
 package com.pos.usuario.usuarioBanco.adapters.rest.v1.controller
 
-import com.pos.usuario.usuarioBanco.adapters.rest.v1.dto.AlteraContaDto
-import com.pos.usuario.usuarioBanco.adapters.rest.v1.dto.ContaDto
-import com.pos.usuario.usuarioBanco.adapters.rest.v1.dto.CriaContaDto
+import com.pos.usuario.usuarioBanco.adapters.rest.v1.dto.conta.AlteraContaDto
+import com.pos.usuario.usuarioBanco.adapters.rest.v1.dto.conta.ContaDto
+import com.pos.usuario.usuarioBanco.adapters.rest.v1.dto.conta.CriaContaDto
 import com.pos.usuario.usuarioBanco.port.incoming.ConsultaDadosConta
 import com.pos.usuario.usuarioBanco.port.outcoming.ModificaDadosConta
 import org.springframework.http.ResponseEntity
@@ -10,7 +10,10 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("conta")
+
+
 class ContaController(val consultaService: ConsultaDadosConta, val modificaService: ModificaDadosConta) {
+
 
     @PostMapping
     fun create(@RequestBody conta: CriaContaDto) = ResponseEntity.ok(modificaService.cadastraNovaConta(conta))
@@ -24,11 +27,12 @@ class ContaController(val consultaService: ConsultaDadosConta, val modificaServi
         return ResponseEntity.ok(contaAlterada);
     }
 
-    @DeleteMapping("{cpf}")
+    @PutMapping("{cpf}/inativarConta")
     fun inativaConta(@PathVariable cpf: String) {
 
         modificaService.inativaConta(cpf)
     }
+
 
 }
 

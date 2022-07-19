@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: conta-banco-app-green
+  namespace: banco-app
+  labels:
+    version: green
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: conta-banco-app
+      namespace: banco-app
+  template:
+    metadata:
+      labels:
+        app: conta-banco-app
+        namespace: banco-app
+        version: green
+    spec:
+      containers:
+        - name: conta-banco-app
+          image: leomafe/conta-banco-service:green
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080

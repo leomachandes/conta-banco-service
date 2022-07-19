@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: conta-banco-service
+  namespace: banco-app
+spec:
+  ports:
+    - port: 8080
+      targetPort: 8080
+      protocol: TCP
+  type: NodePort
+  selector:
+    app: conta-banco-app
+    namespace: banco-app
