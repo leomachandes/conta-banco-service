@@ -1,0 +1,40 @@
+# Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: banco-app
+  labels:
+    app: conta-banco-service
+    type: canary
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: conta-banco-service
+  template:
+    metadata:
+      labels:
+        app: conta-banco-service
+        type: canary
+    spec:
+      containers:
+        - name: conta-banco-service
+          image: leomafe/conta-banco-service:1.0
+          ports:
+            - containerPort: 8080
+          imagePullPolicy: IfNotPresent
+
+
+---
+# Service definition
+apiVersion: v1
+kind: Service
+metadata:
+  name: contabancoservice
+spec:
+  selector:
+    app: conta-banco-service
+  ports:
+    - port: 8080
+      targetPort: 8080
+  type: LoadBalancer

@@ -18,16 +18,16 @@ class ContaController(val consultaService: ConsultaDadosConta, val modificaServi
     @PostMapping
     fun create(@RequestBody conta: CriaContaDto) = ResponseEntity.ok(modificaService.cadastraNovaConta(conta))
 
-    @GetMapping("{cpf}")
+    @GetMapping("/{cpf}")
     fun findByCpf(@PathVariable cpf: String) = ResponseEntity.ok(consultaService.consultaDadosContaPorCpf(cpf))
 
-    @PutMapping("{cpf}")
+    @PutMapping("/{cpf}")
     fun update(@PathVariable cpf: String,@RequestBody conta: AlteraContaDto): ResponseEntity<ContaDto>  {
         val contaAlterada = modificaService.alteraDadosConta(cpf,conta)
         return ResponseEntity.ok(contaAlterada);
     }
 
-    @PutMapping("{cpf}/inativarConta")
+    @PutMapping("/{cpf}/inativarConta")
     fun inativaConta(@PathVariable cpf: String) {
 
         modificaService.inativaConta(cpf)
